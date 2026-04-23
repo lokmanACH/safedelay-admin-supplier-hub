@@ -25,7 +25,7 @@ const schema = z.object({
   telephone: z.string().min(6, "Téléphone invalide"),
   emailPro: z.string().email("Email invalide"),
   numeroPolice: z.string().optional(),
-  chiffreAffaires: z.number({ invalid_type_error: "Nombre requis" }).min(0, "Doit être positif"),
+  chiffreAffaires: z.number({ message: "Nombre requis" }).min(0, "Doit être positif"),
   delaisHabituels: z.string().min(1, "Champ requis"),
   zonesApprovisionnement: z.string().min(2, "Champ requis"),
   historiqueRetards: z.string().min(2, "Champ requis"),
