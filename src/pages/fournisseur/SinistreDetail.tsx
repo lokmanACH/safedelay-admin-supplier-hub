@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -5,13 +6,19 @@ import { Button } from "@/components/ui/button";
 import { StatusBadge } from "@/components/shared/StatusBadge";
 import { WorkflowTimeline } from "@/components/shared/WorkflowTimeline";
 import { EmptyState } from "@/components/shared/EmptyState";
+import { FileUploadMock } from "@/components/shared/FileUploadMock";
+import {
+  Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle,
+} from "@/components/ui/dialog";
 import { claims } from "@/data/mock";
 import { formatXOF, formatDate } from "@/lib/format";
-import { FileText, Download, AlertTriangle, Inbox } from "lucide-react";
+import { FileText, Download, AlertTriangle, Inbox, Banknote, XOctagon, CheckCircle2 } from "lucide-react";
+import { toast } from "sonner";
 
 export default function SinistreDetail() {
   const { id } = useParams();
   const claim = claims.find((c) => c.id === id);
+  const [uploadOpen, setUploadOpen] = useState(false);
 
   if (!claim) {
     return (
@@ -32,6 +39,32 @@ export default function SinistreDetail() {
     >
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
+          {claim.statut === "Refusé" && (
+            <Card className="shadow-soft border-destructive/40 bg-destructive/5">
+              <CardHeader className="flex flex-row items-center gap-2">
+                <XOctagon className="h-4 w-4 text-destructive" />
+                <CardTitle className="text-base">Sinistre refusé</CardTitle>
+              </CardHeader>
+              <CardContent className="text-sm">
+                <p className="text-muted-foreground">Motif communiqué par l'équipe SafeDelay :</p>
+                <p className="mt-2 font-medium">{claim.timeline.find((t) => t.titre.toLowerCase().includes("refus"))?.description ?? "Cause non couverte par le contrat."}</p>
+              </CardContent>
+            </Card>
+          )}
+
+          {(claim.statut === "Accepté" || claim.statut === "Payé") && claim.montantIndemnise !== undefined && (
+            <Card className="shadow-soft border-success/40 bg-success/5">
+              <CardHeader className="flex flex-row items-center gap-2">
+                {claim.statut === "Payé" ? <Banknote className="h-4 w-4 text-success" /> : <CheckCircle2 className="h-4 w-4 text-success" />}
+                <CardTitle className="text-base">{claim.statut === "Payé" ? "Indemnisation versée" : "Indemnisation acceptée"}</CardTitle>
+              </CardHeader>
+              <CardContent className="text-sm flex items-center justify-between">
+                <p className="text-muted-foreground">Montant {claim.statut === "Payé" ? "versé" : "validé"}</p>
+                <p className="text-lg font-semibold text-success">{formatXOF(claim.montantIndemnise)}</p>
+              </CardContent>
+            </Card>
+          )}
+
           <Card className="shadow-soft">
             <CardHeader><CardTitle className="text-base">Résumé du sinistre</CardTitle></CardHeader>
             <CardContent className="grid sm:grid-cols-2 gap-4 text-sm">
@@ -79,7 +112,7 @@ export default function SinistreDetail() {
                 <ul className="list-disc list-inside text-sm space-y-1">
                   {claim.documentsManquants.map((d) => <li key={d}>{d}</li>)}
                 </ul>
-                <Button className="mt-4" size="sm">Téléverser les documents</Button>
+                <Button className="mt-4" size="sm" onClick={() => setUploadOpen(true)}>Téléverser les documents</Button>
               </CardContent>
             </Card>
           )}
@@ -99,6 +132,20 @@ export default function SinistreDetail() {
           </Card>
         </div>
       </div>
+
+      <Dialog open={uploadOpen} onOpenChange={setUploadOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Téléverser des documents</DialogTitle>
+            <DialogDescription>Ajoutez les pièces complémentaires demandées par l'équipe SafeDelay.</DialogDescription>
+          </DialogHeader>
+          <FileUploadMock />
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setUploadOpen(false)}>Annuler</Button>
+            <Button onClick={() => { setUploadOpen(false); toast.success("Documents transmis"); }}>Envoyer</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </AppLayout>
   );
 }
