@@ -25,7 +25,7 @@ const schema = z.object({
   telephone: z.string().min(6, "Téléphone invalide"),
   emailPro: z.string().email("Email invalide"),
   numeroPolice: z.string().optional(),
-  chiffreAffaires: z.coerce.number().min(0, "Doit être positif"),
+  chiffreAffaires: z.number({ invalid_type_error: "Nombre requis" }).min(0, "Doit être positif"),
   delaisHabituels: z.string().min(1, "Champ requis"),
   zonesApprovisionnement: z.string().min(2, "Champ requis"),
   historiqueRetards: z.string().min(2, "Champ requis"),
@@ -129,7 +129,7 @@ export default function Souscription() {
             )}
             {step === 2 && (
               <div className="grid sm:grid-cols-2 gap-4">
-                <Field label="Chiffre d'affaires annuel estimé (XOF)"><Input type="number" {...form.register("chiffreAffaires")} /><Err msg={form.formState.errors.chiffreAffaires?.message} /></Field>
+                <Field label="Chiffre d'affaires annuel estimé (XOF)"><Input type="number" {...form.register("chiffreAffaires", { valueAsNumber: true })} /><Err msg={form.formState.errors.chiffreAffaires?.message} /></Field>
                 <Field label="Délais de livraison habituels"><Input {...form.register("delaisHabituels")} placeholder="ex: 15-30 jours" /><Err msg={form.formState.errors.delaisHabituels?.message} /></Field>
                 <Field label="Zones d'approvisionnement" full><Input {...form.register("zonesApprovisionnement")} placeholder="ex: Europe, Asie, UEMOA" /><Err msg={form.formState.errors.zonesApprovisionnement?.message} /></Field>
               </div>
