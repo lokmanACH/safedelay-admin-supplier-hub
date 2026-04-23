@@ -332,20 +332,24 @@ export const claims: Claim[] = [
 ];
 
 export const documents: DocumentItem[] = [
-  { id: "DOC-1", nom: "Contrat_CTR-2024-0142.pdf", categorie: "Contrat", date: "2024-01-15", taille: "2.4 Mo" },
-  { id: "DOC-2", nom: "Attestation_assurance_2024.pdf", categorie: "Attestation", date: "2024-01-20", taille: "640 Ko" },
-  { id: "DOC-3", nom: "Sinistre_SIN-2025-0118.zip", categorie: "Sinistre", date: "2025-04-08", taille: "3.1 Mo" },
-  { id: "DOC-4", nom: "Facture_prime_T1_2025.pdf", categorie: "Facture", date: "2025-01-10", taille: "180 Ko" },
-  { id: "DOC-5", nom: "Contrat_CTR-2024-0218.pdf", categorie: "Contrat", date: "2024-06-01", taille: "2.1 Mo" },
-  { id: "DOC-6", nom: "Attestation_assurance_2025.pdf", categorie: "Attestation", date: "2025-01-05", taille: "650 Ko" },
+  { id: "DOC-1", nom: "Contrat_CTR-2024-0142.pdf", categorie: "Contrat", date: "2024-01-15", taille: "2.4 Mo", reference: "CTR-2024-0142", refType: "contrat" },
+  { id: "DOC-2", nom: "Attestation_assurance_2024.pdf", categorie: "Attestation", date: "2024-01-20", taille: "640 Ko", reference: "CTR-2024-0142", refType: "contrat" },
+  { id: "DOC-3", nom: "Sinistre_SIN-2025-0118.zip", categorie: "Sinistre", date: "2025-04-08", taille: "3.1 Mo", reference: "SIN-2025-0118", refType: "sinistre" },
+  { id: "DOC-4", nom: "Facture_prime_T1_2025.pdf", categorie: "Facture", date: "2025-01-10", taille: "180 Ko", reference: "CTR-2024-0142", refType: "contrat" },
+  { id: "DOC-5", nom: "Contrat_CTR-2024-0218.pdf", categorie: "Contrat", date: "2024-06-01", taille: "2.1 Mo", reference: "CTR-2024-0218", refType: "contrat" },
+  { id: "DOC-6", nom: "Attestation_assurance_2025.pdf", categorie: "Attestation", date: "2025-01-05", taille: "650 Ko", reference: "CTR-2024-0218", refType: "contrat" },
+  { id: "DOC-7", nom: "BL_SIN-2025-0102.pdf", categorie: "Sinistre", date: "2025-03-22", taille: "1.2 Mo", reference: "SIN-2025-0102", refType: "sinistre" },
 ];
 
 export const notifications: Notification[] = [
-  { id: "N1", titre: "Sinistre accepté", message: "Le sinistre SIN-2025-0078 a été accepté.", date: "2025-04-18T10:30:00", lue: false, type: "success" },
-  { id: "N2", titre: "Documents manquants", message: "Des documents sont requis pour SIN-2025-0095.", date: "2025-04-17T15:10:00", lue: false, type: "warning" },
-  { id: "N3", titre: "Nouvelle souscription", message: "Atlantique Import SA a soumis une demande.", date: "2025-04-16T09:00:00", lue: true, type: "info" },
-  { id: "N4", titre: "Paiement effectué", message: "Indemnisation de 1 850 000 XOF versée.", date: "2025-03-28T16:00:00", lue: true, type: "success" },
-  { id: "N5", titre: "Contrat à renouveler", message: "CTR-2023-0089 a expiré.", date: "2024-03-10T08:00:00", lue: true, type: "error" },
+  { id: "N1", titre: "Sinistre accepté", message: "Le sinistre SIN-2025-0078 a été accepté.", date: "2025-04-18T10:30:00", lue: false, type: "success", category: "sinistre", link: "/admin/sinistres/CLM-004" },
+  { id: "N2", titre: "Documents manquants", message: "Des documents sont requis pour SIN-2025-0095.", date: "2025-04-17T15:10:00", lue: false, type: "warning", category: "sinistre", link: "/admin/sinistres/CLM-003" },
+  { id: "N3", titre: "Nouvelle souscription", message: "Atlantique Import SA a soumis une demande.", date: "2025-04-16T09:00:00", lue: true, type: "info", category: "souscription", link: "/admin/souscriptions/SUB-101" },
+  { id: "N4", titre: "Paiement effectué", message: "Indemnisation de 1 850 000 XOF versée.", date: "2025-03-28T16:00:00", lue: true, type: "success", category: "paiement", link: "/admin/sinistres/CLM-002" },
+  { id: "N5", titre: "Contrat à renouveler", message: "CTR-2023-0089 a expiré.", date: "2024-03-10T08:00:00", lue: true, type: "error", category: "contrat", link: "/fournisseur/contrats" },
+  { id: "N6", titre: "Sinistre soumis", message: "Nouveau sinistre SIN-2025-0123 à traiter.", date: "2025-04-15T11:05:00", lue: false, type: "info", category: "sinistre", link: "/admin/sinistres/CLM-006" },
+  { id: "N7", titre: "Souscription refusée", message: "Cacao Pro Côte d'Ivoire — risque trop élevé.", date: "2025-02-26T09:00:00", lue: true, type: "error", category: "souscription", link: "/admin/souscriptions/SUB-103" },
+  { id: "N8", titre: "Souscription créée", message: "Sahel Logistique — SOU-2025-0051 enregistrée.", date: "2025-04-02T14:20:00", lue: true, type: "info", category: "souscription", link: "/admin/souscriptions/SUB-104" },
 ];
 
 export const claimsMonthly = [

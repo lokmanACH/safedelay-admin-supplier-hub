@@ -5,13 +5,13 @@ type AnyStatus = ClaimStatus | SubscriptionStatus | ContractStatus | string;
 
 const STYLES: Record<string, string> = {
   // Claims
-  Soumis: "bg-info/10 text-info border-info/20",
+  Soumis: "bg-muted text-muted-foreground border-border",
   "En cours de vérification": "bg-info/10 text-info border-info/20",
-  "En analyse": "bg-warning/10 text-warning border-warning/20",
-  "Documents manquants": "bg-warning/10 text-warning border-warning/20",
-  Accepté: "bg-success/10 text-success border-success/20",
+  "En analyse": "bg-orange-500/10 text-orange-600 border-orange-500/20 dark:text-orange-400",
+  "Documents manquants": "bg-yellow-500/10 text-yellow-700 border-yellow-500/30 dark:text-yellow-400",
+  Accepté: "bg-emerald-400/15 text-emerald-700 border-emerald-400/30 dark:text-emerald-400",
   Refusé: "bg-destructive/10 text-destructive border-destructive/20",
-  Payé: "bg-success/15 text-success border-success/30",
+  Payé: "bg-emerald-700/15 text-emerald-800 border-emerald-700/30 dark:text-emerald-300",
   // Subscription
   "En attente": "bg-warning/10 text-warning border-warning/20",
   Validée: "bg-success/10 text-success border-success/20",

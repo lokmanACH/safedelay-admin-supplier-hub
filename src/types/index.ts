@@ -93,6 +93,8 @@ export interface DocumentItem {
   categorie: "Contrat" | "Attestation" | "Sinistre" | "Facture";
   date: string;
   taille: string;
+  reference?: string; // linked contract/claim/subscription ref
+  refType?: "contrat" | "sinistre" | "souscription";
 }
 
 export interface Notification {
@@ -102,4 +104,6 @@ export interface Notification {
   date: string;
   lue: boolean;
   type: "info" | "success" | "warning" | "error";
+  category?: "souscription" | "sinistre" | "paiement" | "contrat" | "système";
+  link?: string;
 }
