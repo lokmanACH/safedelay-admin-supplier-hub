@@ -223,10 +223,10 @@ export default function SinistreNouveau() {
               <Card className="shadow-soft">
                 <CardHeader><CardTitle className="text-base">3. Impact financier</CardTitle></CardHeader>
                 <CardContent className="grid sm:grid-cols-2 gap-4">
-                  <Field label="Valeur totale de la commande (XOF)">
+                  <Field label="Valeur totale de la commande (DZD)">
                     <Input type="number" min={0} value={valeurCommande || ""} onChange={(e) => setValeurCommande(Number(e.target.value))} />
                   </Field>
-                  <Field label="Pénalités contractuelles subies (XOF)">
+                  <Field label="Pénalités contractuelles subies (DZD)">
                     <Input type="number" min={0} value={penalites || ""} onChange={(e) => setPenalites(Number(e.target.value))} />
                   </Field>
                 </CardContent>

@@ -1,7 +1,7 @@
 export const formatXOF = (n: number) =>
   new Intl.NumberFormat("fr-FR", {
     style: "currency",
-    currency: "XOF",
+    currency: "DZD",
     maximumFractionDigits: 0,
   }).format(n);
 

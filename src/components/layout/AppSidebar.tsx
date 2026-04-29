@@ -1,13 +1,12 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
-  LayoutDashboard, FileSignature, AlertTriangle, FileText, Files, User,
-  ListChecks, Settings2, BarChart3, Bell, ShieldCheck,
+  LayoutDashboard, AlertTriangle, FileText, Files, User,
+  ListChecks, Settings2, BarChart3, Bell, ShieldCheck, LogOut
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const FOURNISSEUR_NAV = [
   { to: "/fournisseur/dashboard", label: "Tableau de bord", icon: LayoutDashboard },
-  { to: "/fournisseur/souscription", label: "Souscription", icon: FileSignature },
   { to: "/fournisseur/sinistres", label: "Sinistres", icon: AlertTriangle },
   { to: "/fournisseur/contrats", label: "Contrats", icon: FileText },
   { to: "/fournisseur/documents", label: "Documents", icon: Files },
@@ -26,9 +25,9 @@ const ADMIN_NAV = [
 export function AppSidebar({ space }: { space: "fournisseur" | "admin" }) {
   const items = space === "fournisseur" ? FOURNISSEUR_NAV : ADMIN_NAV;
   const location = useLocation();
-
+  const nav = useNavigate();
   return (
-    <aside className="hidden lg:flex w-64 flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
+    <aside className="hidden lg:flex fixed top-0 left-0 h-screen w-64 flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
       <div className="flex h-16 items-center gap-2 px-6 border-b border-sidebar-border">
         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-primary shadow-elegant">
           <ShieldCheck className="h-5 w-5 text-primary-foreground" />
@@ -63,13 +62,14 @@ export function AppSidebar({ space }: { space: "fournisseur" | "admin" }) {
         })}
       </nav>
 
+      {/*Se deconnecter*/}
       <div className="border-t border-sidebar-border p-4">
-        <NavLink
-          to={space === "fournisseur" ? "/admin/dashboard" : "/fournisseur/dashboard"}
-          className="block rounded-lg bg-sidebar-accent/40 px-3 py-2 text-xs text-sidebar-foreground hover:text-white"
+        <button className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-sidebar-foreground hover:bg-red-600/10 hover:text-red-600"
+          onClick={() => nav("/")}
         >
-          Basculer vers {space === "fournisseur" ? "Admin" : "Fournisseur"} →
-        </NavLink>
+          <LogOut className="h-4 w-4" />
+          Se déconnecter
+        </button>
       </div>
     </aside>
   );

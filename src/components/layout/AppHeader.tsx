@@ -48,7 +48,7 @@ export function AppHeader({ title, subtitle, breadcrumbs }: Props) {
           </div>
           <div className="hidden md:block text-xs">
             <p className="font-medium text-foreground">Sahel Logistique</p>
-            <p className="text-muted-foreground">contact@sahel-logistique.sn</p>
+            <p className="text-muted-foreground">contact@sahel-logistique.dz</p>
           </div>
         </div>
       </div>

@@ -5,9 +5,10 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 
 import FournisseurDashboard from "./pages/fournisseur/Dashboard";
-import Souscription from "./pages/fournisseur/Souscription";
 import FournisseurSinistres from "./pages/fournisseur/Sinistres";
 import SinistreNouveau from "./pages/fournisseur/SinistreNouveau";
 import SinistreDetail from "./pages/fournisseur/SinistreDetail";
@@ -35,8 +36,10 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
 
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+
           <Route path="/fournisseur/dashboard" element={<FournisseurDashboard />} />
-          <Route path="/fournisseur/souscription" element={<Souscription />} />
           <Route path="/fournisseur/sinistres" element={<FournisseurSinistres />} />
           <Route path="/fournisseur/sinistres/nouveau" element={<SinistreNouveau />} />
           <Route path="/fournisseur/sinistres/:id" element={<SinistreDetail />} />
