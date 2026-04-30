@@ -63,9 +63,6 @@ export default function FournisseurDashboard() {
             <CardTitle className="text-base">Actions rapides</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
-            <Button asChild className="w-full justify-start gap-2">
-              <Link to="/fournisseur/souscription"><Plus className="h-4 w-4" /> Nouvelle souscription</Link>
-            </Button>
             <Button asChild variant="outline" className="w-full justify-start gap-2">
               <Link to="/fournisseur/sinistres/nouveau"><FileUp className="h-4 w-4" /> Déclarer un sinistre</Link>
             </Button>
