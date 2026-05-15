@@ -41,18 +41,14 @@ const schema = z.object({
   rc: z.string().min(3, "Champ requis"),
   adresse: z.string().min(5, "Champ requis"),
   telephone: z.string().min(6, "Téléphone invalide"),
-  emailPro: z.string().email("Email invalide"),
   typeActivite: z.string().min(2, "Champ requis"),
   produits: z.string().min(2, "Champ requis"),
   delaisHabituels: z.string().min(1, "Champ requis"),
   zonesApprovisionnement: z.string().min(2, "Champ requis"),
   chiffreAffaires: z.number({ message: "Nombre requis" }).min(0, "Doit être positif"),
-  retards12mois: z.number({ message: "Nombre requis" }).min(0).max(100),
+  retards12mois: z.number({ message: "Nombre requis" }),
   dureeMoyenneRetard: z.number({ message: "Nombre requis" }).min(0),
-  historiqueSinistres: z.string().min(2, "Champ requis"),
-  causesFrequentes: z.string().min(2, "Champ requis"),
   contratsPenalites: z.enum(["oui", "non"]),
-  montantMoyenPenalite: z.number({ message: "Nombre requis" }).min(0),
   incidentsDouaniers: z.string().min(2, "Champ requis"),
   consentement: z.boolean().refine((v) => v === true, "Vous devez accepter les conditions"),
   signature: z.string().min(2, "Signature requise"),
@@ -77,12 +73,11 @@ export default function Souscription() {
 
   const initial: FormData = {
     email: "", password: "", passwordConfirm: "",
-    raisonSociale: "", nif: "", rc: "", adresse: "", telephone: "", emailPro: "",
+    raisonSociale: "", nif: "", rc: "", adresse: "", telephone: "",
     typeActivite: "", produits: "", delaisHabituels: "", zonesApprovisionnement: "",
     chiffreAffaires: 0,
     retards12mois: 0, dureeMoyenneRetard: 0,
-    historiqueSinistres: "", causesFrequentes: "",
-    contratsPenalites: "non", montantMoyenPenalite: 0,
+    contratsPenalites: "non",
     incidentsDouaniers: "",
     consentement: false, signature: "",
   };
@@ -117,9 +112,9 @@ export default function Souscription() {
 
   const STEP_FIELDS: (keyof FormData)[][] = [
     ["email", "password", "passwordConfirm"],
-    ["raisonSociale", "nif", "rc", "adresse", "telephone", "emailPro"],
+    ["raisonSociale", "nif", "rc", "adresse", "telephone"],
     ["typeActivite", "produits", "delaisHabituels", "zonesApprovisionnement", "chiffreAffaires"],
-    ["retards12mois", "dureeMoyenneRetard", "historiqueSinistres", "causesFrequentes", "contratsPenalites", "montantMoyenPenalite", "incidentsDouaniers"],
+    ["retards12mois", "dureeMoyenneRetard", "contratsPenalites", "incidentsDouaniers"],
     [],
     ["consentement", "signature"],
   ];
@@ -348,10 +343,6 @@ export default function Souscription() {
                     <Input {...form.register("adresse")} placeholder="Rue, ville, code postal" />
                     <Err msg={form.formState.errors.adresse?.message} />
                   </Field>
-                  <Field label="Email professionnel" full>
-                    <Input {...form.register("emailPro")} placeholder="contact@entreprise.sn" />
-                    <Err msg={form.formState.errors.emailPro?.message} />
-                  </Field>
                 </div>
               </div>
             )}
@@ -374,22 +365,46 @@ export default function Souscription() {
                     <Err msg={form.formState.errors.typeActivite?.message} />
                   </Field>
 
+                  
                   <Field label="Délais de livraison habituels">
-                    <Input {...form.register("delaisHabituels")} placeholder="ex : 15–30 jours" />
+                    <Select value={form.watch("delaisHabituels")} onValueChange={(v) => form.setValue("delaisHabituels", v, { shouldValidate: true })}>
+                      <SelectTrigger><SelectValue placeholder="Sélectionner..." /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="1-5 jours">1-5 jours</SelectItem>
+                        <SelectItem value="5-10 jours">5-10 jours</SelectItem>
+                        <SelectItem value="15-30 jours">15-30 jours</SelectItem>
+                      </SelectContent>
+                    </Select>
                     <Err msg={form.formState.errors.delaisHabituels?.message} />
                   </Field>
+                  
 
                   <Field label="Produits / catégories vendus" full>
-                    <Textarea rows={2} {...form.register("produits")} placeholder="ex : Blé, riz, sucre, huile végétale..." />
+                    <Select value={form.watch("produits")} onValueChange={(v) => form.setValue("produits", v, { shouldValidate: true })}>
+                      <SelectTrigger><SelectValue placeholder="Sélectionner..." /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="pièces">Pièces détachées</SelectItem>
+                        <SelectItem value="autres catégories">Autres catégories à venir</SelectItem>
+                      </SelectContent>
+                    </Select>
                     <Err msg={form.formState.errors.produits?.message} />
                   </Field>
 
+                  {form.watch("typeActivite") === "importation" && (
                   <Field label="Zones d'approvisionnement" full>
-                    <Input {...form.register("zonesApprovisionnement")} placeholder="ex : Europe, Asie, UEMOA" />
+                    <Select value={form.watch("zonesApprovisionnement")} onValueChange={(v) => form.setValue("zonesApprovisionnement", v, { shouldValidate: true })}>
+                      <SelectTrigger><SelectValue placeholder="Sélectionner..." /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="europe">Europe</SelectItem>
+                        <SelectItem value="asie">Asie</SelectItem>
+                        <SelectItem value="moyen-orient">Moyen-orient</SelectItem>
+                      </SelectContent>
+                    </Select>
                     <Err msg={form.formState.errors.zonesApprovisionnement?.message} />
                   </Field>
+                  )}
 
-                  <Field label="Chiffre d'affaires annuel estimé (XOF)" full>
+                  <Field label="Chiffre d'affaires annuel estimé (DZD)" full>
                     <Input
                       type="number"
                       {...form.register("chiffreAffaires", { valueAsNumber: true })}
@@ -404,33 +419,34 @@ export default function Souscription() {
             {/* ── Step 3 · Risque ── */}
             {step === 3 && (
               <div className="space-y-5">
-                {/* Risk indicator */}
-                {(retards > 0) && (
-                  <div className="rounded-lg border border-border bg-muted/20 px-4 py-3 flex items-center justify-between">
-                    <p className="text-sm text-muted-foreground">Niveau de risque estimé</p>
-                    <Badge variant={riskColor as any}>{riskLevel}</Badge>
-                  </div>
-                )}
 
                 <div className="grid sm:grid-cols-2 gap-4">
-                  <Field label="Retards sur 12 mois (% de commandes)">
-                    <Input type="number" min={0} max={100} {...form.register("retards12mois", { valueAsNumber: true })} placeholder="0" />
+                  <Field label="Retards sur 12 mois">
+                    <Select value={String(form.watch("retards12mois"))} onValueChange={(v) => form.setValue("retards12mois", Number(v), { shouldValidate: true })}>
+                      <SelectTrigger><SelectValue placeholder="Sélectionner..." /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="0"> 0 retard (aucun retard)</SelectItem>
+                        <SelectItem value="1">1-3 retards</SelectItem>
+                        <SelectItem value="2">4-6 retards</SelectItem>
+                        <SelectItem value="3">7-12 retards</SelectItem>
+                        <SelectItem value="4">Plus de 12 retards</SelectItem>
+                      </SelectContent>
+                    </Select>
                     <Err msg={form.formState.errors.retards12mois?.message} />
                   </Field>
 
                   <Field label="Durée moyenne des retards (jours)">
-                    <Input type="number" min={0} {...form.register("dureeMoyenneRetard", { valueAsNumber: true })} placeholder="0" />
+                    <Select value={String(form.watch("dureeMoyenneRetard"))} onValueChange={(v) => form.setValue("dureeMoyenneRetard", Number(v), { shouldValidate: true })}>
+                      <SelectTrigger><SelectValue placeholder="Sélectionner..." /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="0"> 0 jour (aucun retard)</SelectItem>
+                        <SelectItem value="1">1-2 jours</SelectItem>
+                        <SelectItem value="2">3-5 jours</SelectItem>
+                        <SelectItem value="3">6-10 jours</SelectItem>
+                        <SelectItem value="4">Plus de 10 jours</SelectItem>
+                      </SelectContent>
+                    </Select>
                     <Err msg={form.formState.errors.dureeMoyenneRetard?.message} />
-                  </Field>
-
-                  <Field label="Historique de sinistres" full>
-                    <Textarea rows={2} {...form.register("historiqueSinistres")} placeholder="Détaillez les sinistres passés (nature, montant, date)..." />
-                    <Err msg={form.formState.errors.historiqueSinistres?.message} />
-                  </Field>
-
-                  <Field label="Causes fréquentes de retard" full>
-                    <Textarea rows={2} {...form.register("causesFrequentes")} placeholder="ex : grèves portuaires, pénuries de conteneurs..." />
-                    <Err msg={form.formState.errors.causesFrequentes?.message} />
                   </Field>
 
                   <Field label="Contrats avec pénalités de retard ?">
@@ -441,11 +457,6 @@ export default function Souscription() {
                         <SelectItem value="oui">Oui</SelectItem>
                       </SelectContent>
                     </Select>
-                  </Field>
-
-                  <Field label="Montant moyen des pénalités (XOF)">
-                    <Input type="number" min={0} {...form.register("montantMoyenPenalite", { valueAsNumber: true })} placeholder="0" />
-                    <Err msg={form.formState.errors.montantMoyenPenalite?.message} />
                   </Field>
 
                   <Field label="Incidents douaniers" full>
@@ -523,7 +534,6 @@ export default function Souscription() {
                     <div className="grid sm:grid-cols-2 gap-x-8 gap-y-4">
                       <RecapItem label="Entreprise" value={form.getValues("raisonSociale")} />
                       <RecapItem label="NIF" value={form.getValues("nif")} />
-                      <RecapItem label="Email professionnel" value={form.getValues("emailPro")} />
                       <RecapItem label="Téléphone" value={form.getValues("telephone")} />
                       <RecapItem label="Activité" value={form.getValues("typeActivite")} />
                       <RecapItem label="Zones" value={form.getValues("zonesApprovisionnement")} />

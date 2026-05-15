@@ -69,8 +69,9 @@ export default function About() {
 
             {/* Body */}
             <p className="text-[hsl(var(--muted-foreground))] text-sm leading-relaxed max-w-md">
-              SafeDelay est une solution d'assurance innovante, conçue spécialement pour les fournisseurs
-              et entreprises confrontés aux risques de retard dans la chaîne d'approvisionnement.
+              Notre extension de garantie  en responsabilité civile professionnelle couvre les 
+              conséquences financières des retards de livraison, assurant ainsi une protection 
+              complète des tiers impactés.
             </p>
 
             {/* Checklist */}

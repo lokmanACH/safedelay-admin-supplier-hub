@@ -166,7 +166,7 @@ export default function SinistreNouveau() {
                 <CardContent className="grid sm:grid-cols-2 gap-4">
                   <Field label="Contrat RC concerné">
                     <Select value={contratId} onValueChange={setContratId}>
-                      <SelectTrigger><SelectValue placeholder="Sélectionner un contrat actif..." /></SelectTrigger>
+                      <SelectTrigger><SelectValue placeholder="Sélectionner le contrat..." /></SelectTrigger>
                       <SelectContent>
                         {myActiveContracts.map((c) => <SelectItem key={c.id} value={c.id}>{c.reference}</SelectItem>)}
                       </SelectContent>

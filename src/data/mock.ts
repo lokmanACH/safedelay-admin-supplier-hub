@@ -70,7 +70,7 @@ export const contracts: Contract[] = [
     dateFin: "2025-01-14",
     prime: 4500,
     plafondGarantie: 75000,
-    statut: "Actif",
+    statut: "Expiré",
   },
   {
     id: "CTR-002",

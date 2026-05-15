@@ -57,10 +57,6 @@ export default function SignIn() {
     form.setValue("password", cred.password);
 
     setActiveCredential(index);
-
-    toast.success("Compte pré-rempli", {
-      description: `${cred.role} sélectionné`,
-    });
   };
 
   const onSubmit = async (values: FormData) => {
@@ -225,7 +221,7 @@ export default function SignIn() {
         onClick={() => setDevOpen(!devOpen)}
         className="fixed bottom-3 right-3 z-10"
       >
-        <span className="fixed bottom-3 right-3 z-10 text-[12px] px-2 py-1 rounded border border-zinc-200 dark:border-zinc-700 text-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800">
+        <span className="fixed bottom-3 right-3 z-10 text-[12px] px-2 py-1 rounded border border-zinc-200 text-white bg-primary hover:bg-primary/80 dark:hover:bg-zinc-800">
           Clickez pour tester avec des comptes pré-remplis
         </span>
       </button>

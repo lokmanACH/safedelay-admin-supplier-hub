@@ -3,7 +3,7 @@ import { DashboardCard } from "@/components/shared/DashboardCard";
 import { StatusBadge } from "@/components/shared/StatusBadge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { FileSignature, AlertTriangle, CheckCircle2, Wallet, Plus, FileUp, Files } from "lucide-react";
+import { FileSignature, AlertTriangle, CheckCircle2, Wallet, FileUp, Files } from "lucide-react";
 import { Link } from "react-router-dom";
 import { contracts, claims, claimsMonthly } from "@/data/mock";
 import { formatXOF, formatDate } from "@/lib/format";
@@ -63,7 +63,7 @@ export default function FournisseurDashboard() {
             <CardTitle className="text-base">Actions rapides</CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
-            <Button asChild variant="outline" className="w-full justify-start gap-2">
+            <Button asChild  className="w-full justify-start gap-2">
               <Link to="/fournisseur/sinistres/nouveau"><FileUp className="h-4 w-4" /> Déclarer un sinistre</Link>
             </Button>
             <Button asChild variant="outline" className="w-full justify-start gap-2">
