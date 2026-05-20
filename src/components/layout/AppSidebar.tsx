@@ -4,6 +4,9 @@ import {
   ListChecks, Settings2, BarChart3, Bell, ShieldCheck, LogOut
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import logo_pic from "/assets/logo_pic.png";
+import logo_name from "/assets/logo_name.png";
+
 
 const FOURNISSEUR_NAV = [
   { to: "/fournisseur/dashboard", label: "Tableau de bord", icon: LayoutDashboard },
@@ -29,15 +32,8 @@ export function AppSidebar({ space }: { space: "fournisseur" | "admin" }) {
   return (
     <aside className="hidden lg:flex fixed top-0 left-0 h-screen w-64 flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
       <div className="flex h-16 items-center gap-2 px-6 border-b border-sidebar-border">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-primary shadow-elegant">
-          <ShieldCheck className="h-5 w-5 text-primary-foreground" />
-        </div>
-        <div>
-          <p className="text-sm font-semibold text-white">SafeDelay</p>
-          <p className="text-[10px] uppercase tracking-wider text-sidebar-foreground">
-            {space === "fournisseur" ? "Espace fournisseur" : "Console admin"}
-          </p>
-        </div>
+        <img src={logo_pic} alt="SafeDelay" className="h-9 w-9" />
+        <img src={logo_name} alt="SafeDelay" className="h-6 w-auto" />
       </div>
 
       <nav className="flex-1 space-y-1 px-3 py-6">

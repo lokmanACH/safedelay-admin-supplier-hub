@@ -1,14 +1,13 @@
 import { Link } from "react-router-dom";
-import { ShieldCheck } from "lucide-react";
+import logo_pic from "/assets/logo_pic.png";
+import logo_name from "/assets/logo_name.png";
 
 const Header = () => {
   return (
       <header className="flex items-center justify-between px-6 md:px-12 py-3 fixed top-0 left-0 right-0 z-50 bg-[hsl(var(--background))] shadow-elegant">
         <div className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-primary shadow-elegant">
-            <ShieldCheck className="h-5 w-5 text-primary-foreground" />
-          </div>
-          <span className="font-semibold text-lg">SafeDelay</span>
+          <img src={logo_pic} alt="SafeDelay" className="h-9 w-9" />
+          <img src={logo_name} alt="SafeDelay" className="h-6 w-auto" />
         </div>
         <div>
           <ul className="hidden md:flex items-center gap-6">
